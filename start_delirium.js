@@ -50,6 +50,7 @@ const startDelirium = tiled.registerAction("Start D'LIRIUM with this map", funct
 })
 
 startDelirium.text = "Start D'LIRIUM with this map";
+startDelirium.icon = "start.png";
 startDelirium.shortcut = "F5";
 
 tiled.extendMenu("Map", [
