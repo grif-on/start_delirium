@@ -28,7 +28,8 @@ SOFTWARE.
 let dots = "";
 let processOfDelirium = null;
 
-const startDelirium = tiled.registerAction("Start D'LIRIUM with this map", function () {
+
+function magik(parameters) {
     let map = tiled.activeAsset;
 
     dots += ".";
@@ -39,15 +40,61 @@ const startDelirium = tiled.registerAction("Start D'LIRIUM with this map", funct
     tiled.log("Starting D'LIRIUM with map \"" + selectedMapPathName + "\"");
     tiled.log("Please wait " + dots);
 
+    let exePath = "..\\..\\Delirium.exe";
+    let workDir = "..\\..";
+
+    parameters.push("-map");
+    parameters.push(selectedMapPathName);
+
+    if (File.exists("ext:dev.dev")) {
+
+        let configR = new TextFile("ext:dev.dev", TextFile.ReadOnly);
+        let exePathDev = configR.readLine();
+        let workDirDev = configR.readLine();
+        configR.close();
+
+        let latestPathDev;
+        let arrOfDataPaths = File.directoryEntries(workDirDev, 1/*only directories*/, 1/*sort by time*/);
+        if (arrOfDataPaths[0] === "." || arrOfDataPaths[0] === "..") {
+            if (arrOfDataPaths[1] === "." || arrOfDataPaths[1] === "..") {
+                latestPathDev = arrOfDataPaths[2];
+            } else {
+                latestPathDev = arrOfDataPaths[1];
+            }
+        } else {
+            latestPathDev = arrOfDataPaths[0];
+        }
+
+        if (latestPathDev === undefined) {
+            tiled.log("Error while starting devbuild !");
+        } else {
+            exePath = exePathDev;
+            workDir = workDirDev + "\\" + latestPathDev;
+            tiled.log("Found latest devbuild in " + latestPathDev);
+            dataPath = workDir + "\\" + "Delirium.win";
+
+            parameters.push("-game");
+            parameters.push(dataPath);
+        }
+
+    }
+
     if (processOfDelirium !== null) {
         processOfDelirium.kill();
         processOfDelirium.close();
     }
     processOfDelirium = new Process;
-    processOfDelirium.workingDirectory = "..\\..";
-    processOfDelirium.start("..\\..\\Delirium.exe",["-map", selectedMapPathName]);
+    processOfDelirium.workingDirectory = workDir;
+    processOfDelirium.start(exePath, parameters);
 
-})
+}
+
+
+const startDelirium = tiled.registerAction("Start D'LIRIUM with this map", function () {
+
+    magik([]);
+
+});
 
 startDelirium.text = "Start D'LIRIUM with this map";
 startDelirium.icon = "start.png";
