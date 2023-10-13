@@ -99,9 +99,44 @@ const startDelirium = tiled.registerAction("Start D'LIRIUM with this map", funct
 startDelirium.text = "Start D'LIRIUM with this map";
 startDelirium.icon = "start.png";
 startDelirium.shortcut = "F5";
-
 tiled.extendMenu("Map", [
     { separator: true },
-    { action: "Start D'LIRIUM with this map", before: "ResizeMap" },
+    { action: "Start D'LIRIUM with this map", before: "ResizeMap" }
+]);
+
+
+const startDeliriumDeveloper = tiled.registerAction("Start D'LIRIUM with this map (developer)", function () {
+    magik(["-developer"]);
+});
+
+startDeliriumDeveloper.text = "Start D'LIRIUM with this map (developer)";
+startDeliriumDeveloper.icon = "start_d.png";
+startDeliriumDeveloper.shortcut = "Ctrl+F5";
+tiled.extendMenu("Map", [
+    { action: "Start D'LIRIUM with this map (developer)", before: "ResizeMap" }
+]);
+
+
+const startDeliriumVerbose = tiled.registerAction("Start D'LIRIUM with this map (verbose)", function () {
+    magik(["-verbose"]);
+});
+
+startDeliriumVerbose.text = "Start D'LIRIUM with this map (verbose)";
+startDeliriumVerbose.icon = "start_v.png";
+startDeliriumVerbose.shortcut = "Shift+F5";
+tiled.extendMenu("Map", [
+    { action: "Start D'LIRIUM with this map (verbose)", before: "ResizeMap" }
+]);
+
+
+const startDeliriumDeveloperVerbose = tiled.registerAction("Start D'LIRIUM with this map (developer and verbose)", function () {
+    magik(["-developer", "-verbose"]);
+});
+
+startDeliriumDeveloperVerbose.text = "Start D'LIRIUM with this map (developer and verbose)";
+startDeliriumDeveloperVerbose.icon = "start_dv.png";
+startDeliriumDeveloperVerbose.shortcut = "Ctrl+Shift+F5";
+tiled.extendMenu("Map", [
+    { action: "Start D'LIRIUM with this map (developer and verbose)", before: "ResizeMap" },
     { separator: true }
 ]);
