@@ -40,8 +40,8 @@ function magik(parameters) {
     tiled.log("Starting D'LIRIUM with map \"" + selectedMapPathName + "\"");
     tiled.log("Please wait " + dots);
 
-    let exePath = "..\\..\\Delirium.exe";
-    let workDir = "..\\..";
+    let exePath = tiled.applicationDirPath + "\\..\\..\\Delirium.exe";
+    let workDir = tiled.applicationDirPath + "\\..\\..";
 
     parameters.push("-map");
     parameters.push(selectedMapPathName);
