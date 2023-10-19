@@ -85,7 +85,12 @@ function magik(parameters) {
     }
     processOfDelirium = new Process;
     processOfDelirium.workingDirectory = workDir;
-    processOfDelirium.start(exePath, parameters);
+
+    if (File.exists(processOfDelirium.workingDirectory + "\\Delirium.exe")) {
+        processOfDelirium.start(exePath, parameters);
+    } else {
+        tiled.warn("Can't find " + processOfDelirium.workingDirectory + "\\Delirium.exe")
+    }
 
 }
 
